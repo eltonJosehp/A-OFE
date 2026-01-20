@@ -10,18 +10,22 @@ año/
 ├── timeline.html       # Línea de tiempo de momentos especiales
 ├── styles.css          # Estilos kawaii con temática azul y rosa
 ├── script.js           # Animaciones e interactividad
-└── assets/            # Carpeta para tus imágenes y videos
+├── assets/            # Carpeta para tus imágenes y videos
+└── icons/             # Iconos de Cinnamoroll y Snoopy
 ```
 
 ## 🎨 Características
 - ✨ Diseño kawaii con colores pastel (azul, rosa, morado)
-- 🐰 Temática de Cinnamoroll y Snoopy
+- 🐰 Temática de Cinnamoroll y Snoopy con iconos reales
 - ☁️ Nubes y estrellas animadas flotantes
 - 💙 Animaciones suaves y efectos especiales
 - 📱 Diseño responsive (se adapta a móviles)
 - 🎬 Soporte para imágenes y videos
 - 💫 Efectos de partículas al hacer clic
 - 💙 Cursor con corazones animados
+- 🎵 Reproductor de música de fondo en ambas páginas
+- 🔍 Vista de pantalla completa para cada momento
+- ➡️ Navegación suave entre momentos
 
 ## 📝 Cómo Personalizar
 
