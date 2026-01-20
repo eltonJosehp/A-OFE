@@ -17,12 +17,18 @@
     box-sizing: border-box;
 }
 
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
     font-family: 'Quicksand', sans-serif;
     background: linear-gradient(135deg, var(--light-blue) 0%, var(--soft-purple) 50%, var(--soft-pink) 100%);
     min-height: 100vh;
     color: var(--text-dark);
     overflow-x: hidden;
+    position: relative;
 }
 
 /* ===== NUBES ANIMADAS ===== */
@@ -432,12 +438,17 @@ body {
     transition: all 0.3s ease;
     z-index: 100;
     font-family: 'Quicksand', sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn-back:hover {
     background: var(--primary-blue);
     color: var(--white);
     transform: translateX(-5px);
+}
+
+.btn-back:active {
+    transform: translateX(-5px) scale(0.95);
 }
 
 .arrow-back {
@@ -720,6 +731,8 @@ body {
 .moment-media video {
     width: 100%;
     height: auto;
+    max-height: 400px;
+    object-fit: cover;
     display: block;
     border-radius: 15px;
 }
@@ -893,9 +906,11 @@ body {
     max-width: 1000px;
     max-height: 90vh;
     overflow-y: auto;
+    overflow-x: hidden;
     opacity: 0;
     transform: scale(0.9) translateY(30px);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    -webkit-overflow-scrolling: touch;
 }
 
 .fullscreen-container.fade-in {
@@ -1180,8 +1195,152 @@ body {
     }
 }
 
+/* ===== GALERÍA MODERNA CON SCROLL HORIZONTAL ===== */
+.gallery-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(168, 216, 240, 0.1) 100%);
+    padding: 80px 0;
+    position: relative;
+    z-index: 10;
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.gallery-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    color: var(--primary-blue);
+    text-shadow: 2px 2px 4px var(--shadow);
+    margin: 0;
+}
+
+.gallery-subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.gallery-scroll-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding: 20px 40px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.gallery-scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.gallery-scroll-container::-webkit-scrollbar-track {
+    background: rgba(168, 216, 240, 0.2);
+    border-radius: 10px;
+    margin: 0 40px;
+}
+
+.gallery-scroll-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, var(--primary-blue), var(--soft-purple));
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.gallery-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, var(--soft-purple), var(--primary-blue));
+}
+
+.gallery-card {
+    min-width: 350px;
+    max-width: 350px;
+    height: 450px;
+    flex-shrink: 0;
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.gallery-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(168, 216, 240, 0.5);
+}
+
+.gallery-media {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--light-blue), var(--soft-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-media img,
+.gallery-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-media .media-placeholder {
+    min-height: auto;
+    height: 100%;
+}
+
+.gallery-caption {
+    padding: 20px;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(168, 216, 240, 0.05) 100%);
+}
+
+.gallery-caption p {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.5;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
+    .gallery-scroll-container {
+        padding: 20px 20px;
+    }
+    
+    .gallery-card {
+        min-width: 320px;
+        max-width: 320px;
+        height: 420px;
+    }
+    
+    .gallery-media {
+        height: 280px;
+    }
+    
+    .gallery-title {
+        font-size: 2.2rem;
+    }
+    
+    .gallery-subtitle {
+        font-size: 1.1rem;
+    }
+
     .timeline-title {
         font-size: 2.5rem;
     }
@@ -1192,15 +1351,22 @@ body {
 
     .love-letter {
         padding: 30px;
+        margin: 20px;
     }
 
     .letter-content {
         font-size: 1rem;
+        line-height: 1.8;
+    }
+    
+    .letter-content p {
+        margin-bottom: 1rem;
     }
 
     .timeline-item {
         grid-template-columns: 1fr;
         gap: 20px;
+        padding: 30px 20px;
     }
 
     .timeline-content.left,
@@ -1215,11 +1381,37 @@ body {
 
     .moment-card {
         max-width: 100%;
+        padding: 25px;
+    }
+    
+    .moment-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .moment-date {
+        font-size: 1rem;
+    }
+    
+    .moment-description p {
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+    
+    .moment-media img,
+    .moment-media video {
+        max-height: 300px;
     }
 
     .btn-back {
         position: static;
         margin: 20px auto;
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+    
+    .btn-continue {
+        padding: 15px 40px;
+        font-size: 1.1rem;
     }
 
     .cinnamoroll-float {
@@ -1232,6 +1424,14 @@ body {
 
     .final-message h2 {
         font-size: 1.8rem;
+    }
+    
+    .timeline-footer {
+        padding: 40px 20px;
+    }
+    
+    .footer-content p {
+        font-size: 1.1rem;
     }
 
     .cloud {
@@ -1260,57 +1460,139 @@ body {
 }
 
 @media (max-width: 480px) {
+    /* Galería */
+    .gallery-scroll-container {
+        padding: 20px 15px;
+    }
+    
+    .gallery-card {
+        min-width: 280px;
+        max-width: 280px;
+        height: 380px;
+    }
+    
+    .gallery-media {
+        height: 240px;
+    }
+    
+    .gallery-caption p {
+        font-size: 1rem;
+    }
+    
+    .gallery-title {
+        font-size: 1.8rem;
+    }
+    
+    .gallery-subtitle {
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    /* Títulos y textos */
     .timeline-title {
         font-size: 2rem;
+        padding: 0 15px;
     }
 
     .timeline-title .icon {
         font-size: 2rem;
     }
+    
+    .title-love {
+        font-size: 1.8rem;
+    }
 
     .subtitle {
         font-size: 1rem;
+        padding: 0 15px;
+    }
+    
+    /* Carta de amor */
+    .love-letter {
+        padding: 25px 20px;
+        margin: 15px;
+    }
+    
+    .letter-content {
+        font-size: 0.95rem;
+        line-height: 1.7;
     }
 
+    /* Timeline items */
+    .timeline-item {
+        padding: 25px 15px;
+    }
+    
+    .moment-card {
+        padding: 20px;
+    }
+    
     .moment-header h3 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
+    }
+    
+    .moment-date {
+        font-size: 0.9rem;
+    }
+    
+    .moment-description p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .moment-media img,
+    .moment-media video {
+        max-height: 250px;
+        border-radius: 15px;
     }
 
+    /* Botones */
     .btn-continue {
-        padding: 15px 30px;
+        padding: 14px 28px;
         font-size: 1rem;
     }
     
+    .btn-back {
+        padding: 10px 25px;
+        font-size: 0.95rem;
+    }
+    
+    /* Fullscreen modal */
     .fullscreen-card {
-        padding: 25px;
+        padding: 20px;
     }
     
     .fullscreen-card .moment-header h3 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
     
     .fullscreen-card .moment-description p {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        line-height: 1.7;
     }
     
     .fullscreen-container {
         width: 95%;
+        max-height: 90vh;
     }
     
     .fullscreen-close {
         width: 45px;
         height: 45px;
         font-size: 1.5rem;
+        top: 10px;
+        right: 10px;
     }
     
     .fullscreen-nav {
-        gap: 15px;
-        padding: 15px;
+        gap: 10px;
+        padding: 12px;
+        flex-wrap: wrap;
     }
     
     .nav-btn {
-        padding: 12px 25px;
-        font-size: 1rem;
+        padding: 10px 20px;
+        font-size: 0.95rem;
     }
     
     .nav-text {
@@ -1322,19 +1604,77 @@ body {
     }
     
     .position-indicator {
-        font-size: 1rem;
-        padding: 10px 20px;
+        font-size: 0.95rem;
+        padding: 8px 16px;
     }
     
+    /* Decoraciones */
     .header-icon-img {
-        width: 50px;
+        width: 45px;
     }
     
     .timeline-title .icon {
-        width: 50px;
+        width: 45px;
     }
     
     .cinna-icon {
-        width: 50px;
+        width: 45px;
+    }
+    
+    .cloud {
+        font-size: 1.5rem;
+    }
+    
+    /* Footer */
+    .timeline-footer {
+        padding: 30px 15px;
+    }
+    
+    .footer-content p {
+        font-size: 1rem;
+    }
+    
+    .footer-decoration {
+        font-size: 1.5rem;
+    }
+    
+    /* Control de música */
+    .music-control {
+        width: 48px;
+        height: 48px;
+        font-size: 1.4rem;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+
+/* Móviles extra pequeños */
+@media (max-width: 360px) {
+    .gallery-card {
+        min-width: 260px;
+        max-width: 260px;
+        height: 360px;
+    }
+    
+    .gallery-media {
+        height: 220px;
+    }
+    
+    .timeline-title {
+        font-size: 1.8rem;
+    }
+    
+    .love-letter {
+        padding: 20px 15px;
+        margin: 10px;
+    }
+    
+    .moment-card {
+        padding: 18px;
+    }
+    
+    .btn-continue {
+        padding: 12px 24px;
+        font-size: 0.95rem;
     }
 }
